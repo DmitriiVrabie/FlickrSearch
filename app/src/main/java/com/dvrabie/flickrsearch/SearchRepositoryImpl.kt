@@ -1,10 +1,10 @@
 package com.dvrabie.flickrsearch
 
 class SearchRepositoryImpl(
-    service: FlickService
+    private val service: FlickService
 ) : SearchRepository {
 
-    override fun loadImages(query: String): List<ImagesData> {
-        return emptyList()
+    override suspend fun loadImages(query: String, page: Int): ImagesData {
+        return service.searchImages(query, page).images
     }
 }

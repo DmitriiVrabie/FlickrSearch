@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -15,11 +16,14 @@ class SearchActivity : AppCompatActivity(), Search.View {
 
     private var textChangedJob: Job? = null
     private var presenter: Search.Presenter? = null
+    private val adapter = SearchAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         presenter = SearchPresenter(SearchRepositoryImpl(FlickrClient.client), this)
+        findViewById<RecyclerView>(R.id.searchRv).adapter = adapter
+        presenter?.searchQuery("dog")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -32,10 +36,12 @@ class SearchActivity : AppCompatActivity(), Search.View {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                textChangedJob?.cancel()
-                textChangedJob = lifecycleScope.launch(Dispatchers.Main) {
-                    delay(DEBOUNCE_DELAY)
-                    if (!newText.isNullOrEmpty()) presenter?.searchQuery(newText)
+                if (!newText.isNullOrEmpty()) {
+                    textChangedJob?.cancel()
+                    textChangedJob = lifecycleScope.launch(Dispatchers.Main) {
+                        delay(DEBOUNCE_DELAY)
+                        presenter?.searchQuery(newText)
+                    }
                 }
                 return true
             }
@@ -49,7 +55,7 @@ class SearchActivity : AppCompatActivity(), Search.View {
     }
 
     override fun showSearchResult(images: List<Image>) {
-        println("images: $images")
+        adapter.submitList(images)
     }
 
     companion object {

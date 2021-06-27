@@ -1,5 +1,5 @@
 package com.dvrabie.flickrsearch
 
 interface SearchRepository {
-    fun loadImages(query: String): List<ImagesData>
+    suspend fun loadImages(query: String, page: Int): ImagesData
 }

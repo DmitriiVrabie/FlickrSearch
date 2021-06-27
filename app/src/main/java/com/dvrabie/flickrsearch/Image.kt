@@ -1,17 +1,21 @@
 package com.dvrabie.flickrsearch
 
+import com.google.gson.annotations.SerializedName
+
 data class Image(
     val id: String,
     val url: String
 )
 
 data class ImageSearchResponse(
+    @SerializedName("photos")
     val images: ImagesData
 )
 
 data class ImagesData(
     val page: Int,
-    val images: List<Image>
+    @SerializedName("photo")
+    val flickrImages: List<FlickrImage>
 )
 
 data class FlickrImage(
@@ -24,3 +28,5 @@ data class FlickrImage(
     fun imageUrl(): String =
         "https://farm${farm}.staticflickr.com/${server}/${id}_${secret}.jpg"
 }
+
+fun List<FlickrImage>.toImages(): List<Image> = map { Image(it.id, it.imageUrl()) }
