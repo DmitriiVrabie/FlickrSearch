@@ -1,4 +1,4 @@
-package com.dvrabie.flickrsearch
+package com.dvrabie.flickrsearch.webclient
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder

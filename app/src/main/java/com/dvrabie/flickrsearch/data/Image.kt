@@ -1,4 +1,4 @@
-package com.dvrabie.flickrsearch
+package com.dvrabie.flickrsearch.data
 
 import com.google.gson.annotations.SerializedName
 
@@ -14,6 +14,7 @@ data class ImageSearchResponse(
 
 data class ImagesData(
     val page: Int,
+    val pages: Int,
     @SerializedName("photo")
     val flickrImages: List<FlickrImage>
 )

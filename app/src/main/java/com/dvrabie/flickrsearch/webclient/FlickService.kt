@@ -1,6 +1,7 @@
-package com.dvrabie.flickrsearch
+package com.dvrabie.flickrsearch.webclient
 
-import com.dvrabie.flickrsearch.FlickrClient.FLICKR_API_KEY
+import com.dvrabie.flickrsearch.data.ImageSearchResponse
+import com.dvrabie.flickrsearch.webclient.FlickrClient.FLICKR_API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
 

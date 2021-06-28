@@ -1,4 +1,4 @@
-package com.dvrabie.flickrsearch
+package com.dvrabie.flickrsearch.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dvrabie.flickrsearch.data.Image
+import com.dvrabie.flickrsearch.R
 import com.squareup.picasso.Picasso
 
 class SearchAdapter : ListAdapter<Image, SearchAdapter.ImageViewHolder>(SearchDiffUtil) {
@@ -25,12 +27,12 @@ class SearchAdapter : ListAdapter<Image, SearchAdapter.ImageViewHolder>(SearchDi
 
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(item: Image) {
-            val imageView = itemView as ImageView
             Picasso.get()
                 .load(item.url)
+                .placeholder(R.drawable.ic_image)
                 .resize(400, 400)
                 .centerCrop()
-                .into(itemView)
+                .into(itemView as ImageView)
         }
     }
 
@@ -40,7 +42,6 @@ class SearchAdapter : ListAdapter<Image, SearchAdapter.ImageViewHolder>(SearchDi
 
         override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean =
             oldItem == newItem
-
     }
 
 }

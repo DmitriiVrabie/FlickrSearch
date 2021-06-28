@@ -1,4 +1,6 @@
-package com.dvrabie.flickrsearch
+package com.dvrabie.flickrsearch.data
+
+import com.dvrabie.flickrsearch.webclient.FlickService
 
 class SearchRepositoryImpl(
     private val service: FlickService
